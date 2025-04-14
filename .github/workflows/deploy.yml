@@ -17,19 +17,18 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: '16'
-          cache: 'npm'
 
       - name: Install Dependencies for simple-mind-map
         run: |
           cd simple-mind-map
-          npm install --legacy-peer-deps
+          npm install --legacy-peer-deps --no-package-lock
           npm run build
           cd ..
 
       - name: Install Dependencies for web
         run: |
           cd web
-          npm install --legacy-peer-deps
+          npm install --legacy-peer-deps --no-package-lock
           npm run build
 
       - name: Deploy
@@ -37,3 +36,4 @@ jobs:
         with:
           folder: web/dist
           branch: gh-pages
+          token: ${{ secrets.GITHUB_TOKEN }}
