@@ -1,33 +1,33 @@
-name: Deploy to GitHub Pages
+name: Build and Deploy
 
 on:
+  workflow_dispatch:   # 添加手动触发按钮
   push:
     branches:
-      - main # 或者 master，取决于你的默认分支名
+      - main   # 或者 master，取决于你的默认分支
 
 jobs:
-  deploy:
+  build-and-deploy:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      
+      - name: Checkout
+        uses: actions/checkout@v3
+
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
           node-version: '16'
-          
-      - name: Install Dependencies
+
+      - name: Install and Build
         run: |
-          cd web
+          cd simple-mind-map
           npm install
-          
-      - name: Build
-        run: |
-          cd web
+          cd ../web
+          npm install
           npm run build
-          
+
       - name: Deploy
-        uses: peaceiris/actions-gh-pages@v3
+        uses: JamesIves/github-pages-deploy-action@v4
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./web/dist
+          folder: dist
+          branch: gh-pages
