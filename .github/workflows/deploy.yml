@@ -1,10 +1,10 @@
 name: Build and Deploy
 
 on:
-  workflow_dispatch:   # 添加手动触发按钮
+  workflow_dispatch:
   push:
     branches:
-      - main   # 或者 master，取决于你的默认分支
+      - main
 
 jobs:
   build-and-deploy:
@@ -17,17 +17,23 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: '16'
+          cache: 'npm'
 
-      - name: Install and Build
+      - name: Install Dependencies for simple-mind-map
         run: |
           cd simple-mind-map
-          npm install
-          cd ../web
-          npm install
+          npm install --legacy-peer-deps
+          npm run build
+          cd ..
+
+      - name: Install Dependencies for web
+        run: |
+          cd web
+          npm install --legacy-peer-deps
           npm run build
 
       - name: Deploy
         uses: JamesIves/github-pages-deploy-action@v4
         with:
-          folder: dist
+          folder: web/dist
           branch: gh-pages
