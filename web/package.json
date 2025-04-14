@@ -30,7 +30,7 @@
   "devDependencies": {
     "@vue/cli-plugin-babel": "^4.5.0",
     "@vue/cli-plugin-eslint": "^4.5.0",
-    "@vue/cli-service": "^4.5.0",
+    "@vue/cli-service": "^4.5.19",
     "babel-eslint": "^10.1.0",
     "chokidar": "^3.5.3",
     "esbuild": "^0.17.15",
